@@ -1,2 +1,994 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
-:root{--bg:#07080d;--panel:#0e111a;--line:#252a38;--muted:#8e96a9;--text:#f6f7fb;--hot:#ff5b3d;--gold:#ffc857}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#202637 0,#0a0b11 38%,#07080d 70%);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}.hidden{display:none!important}header{height:72px;padding:0 5%;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;background:#07080ddd;backdrop-filter:blur(15px)}.logo{font:900 17px "Space Grotesk";letter-spacing:1px}.logo span{color:#8d95a8}.view{max-width:1240px;margin:auto;padding:46px 24px}.hero{max-width:780px;margin:30px 0 42px}.eyebrow,.sectionTitle,small{font-size:10px;letter-spacing:2px;font-weight:800;color:#9ba3b6}.hero h1{font:700 clamp(50px,8vw,92px)/.92 "Space Grotesk";margin:16px 0}.hero h1 i{color:#aab2c6;font-style:normal}.hero p{color:#a0a7b7;max-width:600px;font-size:17px;line-height:1.6}.animeGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.animeCard{min-height:230px;padding:18px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#151925,#0c0e15);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}.animeCard:hover{transform:translateY(-5px);border-color:#555d71}.animeArt{height:100px;border-radius:14px;background-size:cover;background-position:center;position:relative;overflow:hidden}.animeArt:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent,#0c0e15)}.animeIcon{font-size:35px;position:absolute;z-index:1;top:10px;left:12px}.animeCard h3{font-size:16px;margin:12px 0 4px}.animeCard p{font-size:11px;color:var(--muted);margin:0}.animeCard button,.joinCard button,.hostTools button,.invite button,.finish button{background:#eef0f5;color:#090a0f;padding:12px 15px;border:0;border-radius:10px;font-weight:900}.joinCard,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#11141e,#0b0d14);border-radius:20px;box-shadow:0 20px 60px #0003}.joinCard{padding:20px 24px;margin-top:18px;display:flex;justify-content:space-between;gap:20px;align-items:center}.joinCard h2{margin:7px 0 0}.formline{display:flex;gap:8px;flex-wrap:wrap}.formline input,.invite input,.settings input{background:#07090e;color:#fff;border:1px solid #303646;padding:12px;border-radius:10px;outline:none}.lobby{padding:28px}.lobbyHead{display:flex;justify-content:space-between;gap:20px;align-items:center}.lobbyHead h1{font:700 54px "Space Grotesk";margin:8px 0}.lobbyHead p{color:var(--muted)}.hostTools{display:flex;gap:8px}.hot{background:var(--hot)!important;color:white!important}.invite{display:flex;margin:25px 0;gap:8px}.invite input{flex:1}.lobbyBody{display:grid;grid-template-columns:1fr 310px;gap:25px}.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}.person{padding:15px;border:1px solid #282d3b;border-radius:14px;background:#090c13}.person b{display:block}.person span{font-size:12px;color:var(--muted)}.online{color:#71e4a7!important}.settings{border-left:1px solid var(--line);padding-left:24px}.settings label{display:block;color:#9ba3b6;font-size:11px;margin:13px 0 6px}.settings input{width:100%}.settings button{margin-top:12px;background:#252b3a;color:#fff;border:0;padding:10px;border-radius:9px}.bar{display:flex;justify-content:space-between;padding:0 4px 16px;color:#9da5b7;font-size:12px}.bar b{margin-left:14px;color:#fff}.live{color:#68e3a1;margin-right:15px}.auctionLayout{display:grid;grid-template-columns:250px 1fr 250px;gap:15px}.left,.right{padding:20px;height:fit-content}.sectionTitle{margin:3px 0 12px}.wallet{font:700 34px "Space Grotesk";margin-bottom:25px}.playerMini{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #202531;font-size:12px}.playerMini span{color:#9ba3b6}.historyTitle{margin-top:24px}.sale{font-size:11px;padding:8px 0;border-bottom:1px solid #202531}.sale span{display:block;color:#9ba3b6}.stage{min-width:0}.character{text-align:center;min-height:650px;padding:24px;display:flex;align-items:center;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.character:before{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:#ffffff05;filter:blur(50px)}.characterTop{width:100%;display:flex;justify-content:space-between;color:#9ba3b6;font-size:11px;letter-spacing:1px}.portraitWrap{width:min(300px,65vw);height:min(300px,65vw);margin:15px auto 8px;border-radius:28px;overflow:hidden;border:1px solid #353b4b;background:#161b27;box-shadow:0 25px 70px #0008;position:relative}.portraitWrap img{width:100%;height:100%;object-fit:cover;display:none}.portraitWrap.loaded img{display:block}.portraitWrap.loaded #portraitFallback{display:none}#portraitFallback{height:100%;display:grid;place-items:center;font-size:95px;background:radial-gradient(circle,#252c3d,#10131b)}.character h1{font:700 clamp(32px,5vw,58px) "Space Grotesk";margin:5px 0}.base{font-size:10px;color:#81899b;letter-spacing:2px}.base b{color:#dfe2e9}.timer{font:900 58px "Space Grotesk";margin:10px}.bidline{width:min(650px,100%);display:flex;align-items:center;justify-content:space-between;text-align:left;background:#090c13;border:1px solid #292e3c;border-radius:16px;padding:12px 12px 12px 18px}.bidline small{display:block}.bidline strong{display:block;font:700 37px "Space Grotesk"}.bidline span{color:#9098aa;font-size:11px}.bidline button{background:#fff;color:#090a0f;border:0;border-radius:12px;padding:17px 25px;font-weight:900;font-size:16px}.bidline button:disabled{opacity:.35}.hostBar{margin-top:10px}.adminBtn{background:#232938;color:#fff;border:0;padding:8px;border-radius:8px;margin:3px;font-size:11px}.rosterItem{padding:10px 0;border-bottom:1px solid #222735;font-size:12px}.rosterItem b{display:block}.rosterItem span{color:#9ba3b6}.trophy{font-size:80px}.finish{text-align:center;padding:60px 30px}.finish h1{font:700 56px "Space Grotesk"}.finalGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;text-align:left;margin:25px 0}.finalCard{background:#090c13;border:1px solid #292e3c;border-radius:14px;padding:15px}.finalCard h3{margin:0 0 8px}.finalCard p{color:#a0a7b7;font-size:12px;line-height:1.7}.modal{position:fixed;inset:0;background:#000a;display:grid;place-items:center;z-index:20}.modalBox{width:min(460px,92vw);background:#11141e;border:1px solid #303646;border-radius:18px;padding:24px}.modalBox button{margin-top:15px;background:#fff;padding:10px 15px;border:0;border-radius:8px;font-weight:800}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#f5f5f7;color:#090a0f;padding:12px 18px;border-radius:10px;font-weight:800;display:none;z-index:30}@media(max-width:950px){.animeGrid{grid-template-columns:repeat(2,1fr)}.auctionLayout{grid-template-columns:1fr}.left,.right{order:2}.lobbyBody{grid-template-columns:1fr}.settings{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.right{order:3}}@media(max-width:600px){.view{padding:28px 14px}.animeGrid{grid-template-columns:1fr}.joinCard,.lobbyHead{flex-direction:column;align-items:stretch}.lobbyHead h1{font-size:42px}.formline,.hostTools{flex-direction:column}.portraitWrap{width:230px;height:230px}.bidline{flex-direction:column;gap:12px;text-align:center}.bidline button{width:100%}}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root{
+  --bg:#050609;
+  --surface:#0b0d12;
+  --surface2:#10131a;
+  --surface3:#151923;
+  --line:#202531;
+  --line2:#2d3442;
+  --text:#f4f6fa;
+  --muted:#7f8798;
+  --muted2:#a6adbb;
+  --accent:#ff6247;
+  --accent2:#ff8069;
+  --green:#4fe29a;
+  --gold:#ffc857;
+  --blue:#6ea8ff;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  background:#020306;
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -15%,#252b3b 0,#0d1017 28%,#050609 65%);
+  color:var(--text);
+  font-family:Inter,system-ui,sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.025;
+  z-index:50;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  height:60px;
+  padding:0 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:15;
+  background:rgba(5,6,9,.86);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+
+.logo{
+  font:800 16px "Space Grotesk",sans-serif;
+  letter-spacing:1.5px;
+}
+
+.logo span{
+  color:#70788a;
+}
+
+#topStatus{
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  color:var(--green);
+  padding:6px 9px;
+  border:1px solid rgba(79,226,154,.2);
+  border-radius:20px;
+  background:rgba(79,226,154,.06);
+}
+
+/* =========================
+   VIEWS
+========================= */
+
+.view{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  padding:24px 15px 40px;
+}
+
+/* =========================
+   HOME
+========================= */
+
+.hero{
+  margin:24px 0 30px;
+}
+
+.eyebrow,
+.sectionTitle,
+small{
+  font-size:9px;
+  letter-spacing:1.8px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+.hero h1{
+  font:700 52px/.88 "Space Grotesk",sans-serif;
+  letter-spacing:-2.5px;
+  margin:13px 0 18px;
+}
+
+.hero h1 i{
+  color:#737c8e;
+  font-style:normal;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+  max-width:430px;
+}
+
+/* =========================
+   ANIME CARDS
+========================= */
+
+.animeGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:11px;
+}
+
+.animeCard{
+  min-height:165px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(145deg,#12151d,#080a0e);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+  transition:.18s ease;
+}
+
+.animeCard:active{
+  transform:scale(.985);
+}
+
+.animeArt{
+  height:105px;
+  border-radius:13px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.animeArt:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,.35),
+    transparent 55%,
+    rgba(0,0,0,.15)
+  );
+}
+
+.animeArt:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    transparent 35%,
+    rgba(8,10,14,.95)
+  );
+}
+
+.animeIcon{
+  position:absolute;
+  z-index:2;
+  right:11px;
+  top:9px;
+  font-size:24px;
+  filter:drop-shadow(0 4px 8px #000);
+}
+
+.animeCard h3{
+  font:700 15px "Space Grotesk",sans-serif;
+  margin:9px 3px 2px;
+}
+
+.animeCard p{
+  font-size:8px;
+  letter-spacing:1.2px;
+  color:#656d7e;
+  margin:0 3px;
+}
+
+.animeCard button{
+  width:100%;
+  margin-top:10px;
+  min-height:43px;
+  background:#f1f3f7;
+  color:#08090c;
+  border:0;
+  border-radius:11px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.3px;
+}
+
+.animeCard button:active{
+  transform:scale(.98);
+}
+
+/* =========================
+   JOIN
+========================= */
+
+.joinCard,
+.panel{
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#11141b,#080a0e);
+  border-radius:18px;
+  box-shadow:0 20px 55px rgba(0,0,0,.3);
+}
+
+.joinCard{
+  padding:17px;
+  margin-top:15px;
+}
+
+.joinCard h2{
+  font:700 20px "Space Grotesk",sans-serif;
+  margin:5px 0 14px;
+}
+
+.formline{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.formline input,
+.invite input,
+.settings input{
+  width:100%;
+  min-height:45px;
+  background:#06080b;
+  color:#fff;
+  border:1px solid #252b36;
+  padding:12px;
+  border-radius:11px;
+  outline:none;
+  font-size:13px;
+}
+
+.formline input:focus,
+.settings input:focus{
+  border-color:#555e70;
+}
+
+.joinCard button{
+  width:100%;
+  min-height:45px;
+  margin-top:8px;
+  background:#f1f3f7;
+  color:#07080b;
+  border:0;
+  border-radius:11px;
+  font-weight:900;
+}
+
+/* =========================
+   LOBBY
+========================= */
+
+.lobby{
+  padding:0;
+}
+
+.lobbyHead{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:15px;
+  margin-bottom:16px;
+}
+
+.lobbyHead h1{
+  font:700 36px/1 "Space Grotesk",sans-serif;
+  letter-spacing:-1.5px;
+  margin:7px 0;
+}
+
+.lobbyHead p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.hostTools{
+  display:flex;
+  gap:7px;
+}
+
+.hostTools button{
+  flex:1;
+  min-height:43px;
+  border:1px solid var(--line2);
+  background:#151923;
+  color:#fff;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.hot{
+  background:var(--accent)!important;
+  border-color:var(--accent)!important;
+  color:#fff!important;
+}
+
+.invite{
+  display:flex;
+  gap:7px;
+  margin:15px 0;
+}
+
+.invite input{
+  min-width:0;
+}
+
+.invite button{
+  flex:0 0 auto;
+  background:#171b25;
+  color:#fff;
+  border:1px solid var(--line2);
+  border-radius:10px;
+  font-weight:800;
+}
+
+.lobbyBody{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.people{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.person{
+  min-width:0;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#090b10;
+}
+
+.person b{
+  display:block;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.person span{
+  display:block;
+  margin-top:5px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+.online{
+  color:var(--green)!important;
+}
+
+.adminBtn{
+  background:#191e28;
+  color:#fff;
+  border:1px solid #272e3a;
+  padding:8px 9px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:800;
+}
+
+.settings{
+  border-top:1px solid var(--line);
+  padding-top:16px;
+}
+
+.settings h3{
+  font:700 14px "Space Grotesk";
+  margin:0 0 10px;
+}
+
+.settings label{
+  display:block;
+  color:#737c8c;
+  font-size:9px;
+  letter-spacing:1px;
+  margin:12px 0 5px;
+}
+
+.settings button{
+  width:100%;
+  min-height:42px;
+  margin-top:10px;
+  background:#1b202b;
+  color:#fff;
+  border:1px solid #2b3240;
+  border-radius:10px;
+  font-weight:800;
+}
+
+/* =========================
+   AUCTION TOP BAR
+========================= */
+
+.bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 1px 11px;
+  color:#737c8d;
+  font-size:9px;
+  letter-spacing:.7px;
+}
+
+.bar b{
+  margin-left:7px;
+  color:#e9ebef;
+}
+
+.live{
+  color:var(--green);
+  margin-right:5px;
+  font-weight:800;
+}
+
+/* =========================
+   AUCTION LAYOUT
+========================= */
+
+.auctionLayout{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.stage{
+  order:1;
+  min-width:0;
+}
+
+.left{
+  order:2;
+}
+
+.right{
+  order:3;
+}
+
+/* =========================
+   SIDE PANELS
+========================= */
+
+.left,
+.right{
+  padding:15px;
+  height:auto;
+}
+
+.sectionTitle{
+  margin:2px 0 10px;
+}
+
+.wallet{
+  font:700 26px "Space Grotesk",sans-serif;
+  margin-bottom:15px;
+}
+
+.playerMini{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #181d26;
+  font-size:11px;
+}
+
+.playerMini b{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.playerMini span{
+  color:#9aa2b1;
+  font-weight:700;
+}
+
+.historyTitle{
+  margin-top:20px;
+}
+
+.sale{
+  font-size:10px;
+  padding:8px 0;
+  border-bottom:1px solid #181d26;
+}
+
+.sale b{
+  font-size:11px;
+}
+
+.sale span{
+  display:block;
+  color:#727b8c;
+  margin-top:3px;
+}
+
+.rosterItem{
+  padding:10px 0;
+  border-bottom:1px solid #181d26;
+  font-size:11px;
+}
+
+.rosterItem b{
+  display:block;
+  font-size:12px;
+}
+
+.rosterItem span{
+  color:#7d8697;
+  display:block;
+  margin-top:3px;
+}
+
+/* =========================
+   CHARACTER AUCTION CARD
+========================= */
+
+.character{
+  min-height:calc(100vh - 115px);
+  padding:13px 0 20px;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  justify-content:flex-start;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:22px;
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(120,130,155,.13),
+      transparent 42%
+    ),
+    linear-gradient(180deg,#11151e,#07090d 70%);
+}
+
+.character:before{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  top:100px;
+  border-radius:50%;
+  background:rgba(255,255,255,.035);
+  filter:blur(55px);
+  pointer-events:none;
+}
+
+.characterTop{
+  width:100%;
+  padding:4px 14px 0;
+  display:flex;
+  justify-content:space-between;
+  color:#727b8d;
+  font-size:9px;
+  letter-spacing:1px;
+  position:relative;
+  z-index:2;
+}
+
+.characterTop span:last-child{
+  color:#aab1bf;
+}
+
+/* =========================
+   CHARACTER PICTURE
+========================= */
+
+.portraitWrap{
+  width:calc(100vw - 52px);
+  max-width:340px;
+  height:calc(100vw - 52px);
+  max-height:340px;
+  margin:18px auto 12px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid #303746;
+  background:
+    radial-gradient(circle at 50% 35%,#252c3b,#0d1016 72%);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.65),
+    inset 0 0 40px rgba(255,255,255,.025);
+  position:relative;
+  z-index:2;
+}
+
+.portraitWrap:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 65%,
+      rgba(0,0,0,.45)
+    );
+}
+
+.portraitWrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+.portraitWrap.loaded img{
+  display:block;
+}
+
+.portraitWrap.loaded #portraitFallback{
+  display:none;
+}
+
+#portraitFallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  font-size:80px;
+  background:
+    radial-gradient(circle at center,#252d3d,#0d1016);
+}
+
+/* =========================
+   CHARACTER INFO
+========================= */
+
+.character h1{
+  position:relative;
+  z-index:2;
+  max-width:95%;
+  font:700 34px/1 "Space Grotesk",sans-serif;
+  letter-spacing:-1px;
+  margin:6px 0 5px;
+}
+
+.base{
+  position:relative;
+  z-index:2;
+  font-size:8px;
+  color:#6e7788;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+}
+
+.base b{
+  color:#d8dce4;
+}
+
+.timer{
+  position:relative;
+  z-index:2;
+  font:700 43px "Space Grotesk",sans-serif;
+  letter-spacing:-1px;
+  margin:12px 0 5px;
+}
+
+#rarity{
+  position:relative;
+  z-index:2;
+  display:inline-block;
+  padding:5px 9px;
+  margin-top:2px;
+  border:1px solid rgba(255,200,87,.2);
+  border-radius:20px;
+  color:var(--gold);
+  background:rgba(255,200,87,.06);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+/* =========================
+   BID PANEL
+========================= */
+
+.bidline{
+  position:relative;
+  z-index:3;
+  width:calc(100% - 22px);
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:13px;
+  padding:14px;
+  text-align:center;
+  background:rgba(5,7,10,.88);
+  border:1px solid #292f3b;
+  border-radius:17px;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  backdrop-filter:blur(12px);
+}
+
+.bidline small{
+  display:block;
+  margin-bottom:2px;
+}
+
+.bidline strong{
+  display:block;
+  font:700 32px "Space Grotesk",sans-serif;
+}
+
+.bidline span{
+  display:block;
+  margin-top:3px;
+  color:#777f90;
+  font-size:9px;
+}
+
+.bidline button{
+  width:100%;
+  min-height:52px;
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.4px;
+  box-shadow:0 8px 25px rgba(255,98,71,.2);
+  transition:.15s;
+}
+
+.bidline button:active{
+  transform:scale(.97);
+}
+
+.bidline button:disabled{
+  opacity:.28;
+  box-shadow:none;
+  cursor:not-allowed;
+}
+
+/* =========================
+   HOST CONTROLS
+========================= */
+
+.hostBar{
+  position:relative;
+  z-index:4;
+  margin-top:8px;
+  padding:0 7px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.hostBar .adminBtn{
+  min-height:34px;
+}
+
+/* =========================
+   FINISH SCREEN
+========================= */
+
+.finish{
+  text-align:center;
+  padding:35px 0;
+}
+
+.trophy{
+  font-size:65px;
+  margin-bottom:8px;
+}
+
+.finish h1{
+  font:700 40px "Space Grotesk",sans-serif;
+  letter-spacing:-1.5px;
+  margin:10px 0;
+}
+
+.finalGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  text-align:left;
+  margin:20px 0;
+}
+
+.finalCard{
+  background:#090b10;
+  border:1px solid #252b36;
+  border-radius:14px;
+  padding:14px;
+}
+
+.finalCard h3{
+  margin:0 0 7px;
+  font-size:14px;
+}
+
+.finalCard p{
+  color:#8d95a5;
+  font-size:11px;
+  line-height:1.7;
+  margin:0;
+}
+
+.finish button{
+  width:100%;
+  min-height:48px;
+  background:#f1f3f7;
+  color:#07080b;
+  border:0;
+  border-radius:11px;
+  font-weight:900;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:grid;
+  place-items:center;
+  z-index:20;
+  padding:15px;
+  backdrop-filter:blur(10px);
+}
+
+.modalBox{
+  width:100%;
+  max-width:420px;
+  background:#11141b;
+  border:1px solid #303745;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 30px 80px #000;
+}
+
+.modalBox button{
+  width:100%;
+  min-height:44px;
+  margin-top:15px;
+  background:#f1f3f7;
+  color:#08090c;
+  border:0;
+  border-radius:10px;
+  font-weight:800;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  width:calc(100% - 30px);
+  max-width:430px;
+  text-align:center;
+  background:#f2f4f7;
+  color:#08090c;
+  padding:12px 16px;
+  border-radius:11px;
+  font-size:11px;
+  font-weight:800;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+  display:none;
+  z-index:30;
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:360px){
+
+  .view{
+    padding-left:11px;
+    padding-right:11px;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+  .character h1{
+    font-size:29px;
+  }
+
+  .portraitWrap{
+    width:calc(100vw - 42px);
+    height:calc(100vw - 42px);
+  }
+
+  .timer{
+    font-size:38px;
+  }
+
+  .bidline strong{
+    font-size:28px;
+  }
+}
+
+/* =========================
+   PREVENT DESKTOP UI
+========================= */
+
+@media(min-width:700px){
+
+  body{
+    background:#020306;
+  }
+
+  header{
+    max-width:520px;
+    margin:0 auto;
+    border-left:1px solid #171b23;
+    border-right:1px solid #171b23;
+  }
+
+  .view{
+    border-left:1px solid #171b23;
+    border-right:1px solid #171b23;
+    min-height:calc(100vh - 60px);
+    background:
+      radial-gradient(circle at 50% 0,#141925 0,#07090d 42%);
+  }
+  }
