@@ -136,7 +136,6 @@ const ANIME = {
       ["Dosu Kinuta",5],
       ["Jirobo",6],
       ["Kidomaru",6],
-      ["Sakon",6],
       ["Tayuya",6],
       ["Ukon",6],
       ["Hayate Gekko",5],
