@@ -371,7 +371,9 @@ const ANIME = {
       ["Rokuro",6],
       ["Kamanue",5],
       ["Kyogai (Drum Demon)",6],
-      ["Zohakuten",10]
+      ["Zohakuten",10],
+      ["Demon King Tanjiro",10],
+      ["Yorichhi",10]
      
     ]
   },
@@ -433,7 +435,7 @@ const TARGETS = {
   naruto: 100,
   jjk: 78,
   aot: 54,
-  demon_slayer: 100,
+  demon_slayer: 51,
   death_note: 30
 };
 
