@@ -30,6 +30,13 @@ TOTAL = 430 AUCTION ENTRIES
 */
 
 const ANIME = {
+  /*
+  =======================================================
+  NARUTO + NARUTO SHIPPUDEN
+  EXACTLY 100
+  =======================================================
+  */
+
   naruto: {
     name: "Naruto + Naruto Shippuden",
     icon: "🍥",
@@ -39,10 +46,9 @@ const ANIME = {
       ["Naruto Uzumaki",10],
       ["Sasuke Uchiha",10],
       ["Sakura Haruno",8],
-      ["Kakashi Hatake",9],
-      ["Itachi Uchiha",10],
+      ["Itachi Uchiha",9],
       ["Madara Uchiha",10],
-      ["Obito Uchiha",9],
+      ["Obito Uchiha",10],
       ["Minato Namikaze",10],
       ["Hashirama Senju",10],
       ["Tobirama Senju",9],
@@ -58,11 +64,15 @@ const ANIME = {
       ["Gaara",8],
       ["Rock Lee",7],
       ["Might Guy",9],
+      ["Might Duy",6],
       ["Neji Hyuga",7],
       ["Hinata Hyuga",7],
+      ["Hanabi Hyuga",6],
       ["Shikamaru Nara",8],
+      ["Shikaku Nara",7],
       ["Choji Akimichi",6],
       ["Ino Yamanaka",6],
+      ["Inoichi Yamanaka",6],
       ["Kiba Inuzuka",6],
       ["Shino Aburame",6],
       ["Tenten",5],
@@ -72,7 +82,6 @@ const ANIME = {
       ["Kurenai Yuhi",6],
       ["Anko Mitarashi",5],
       ["Iruka Umino",5],
-      ["Might Duy",6],
       ["Danzo Shimura",7],
       ["Kushina Uzumaki",7],
       ["Fugaku Uchiha",7],
@@ -89,20 +98,6 @@ const ANIME = {
       ["Hamura Otsutsuki",9],
       ["Indra Otsutsuki",9],
       ["Asura Otsutsuki",9],
-      ["Momoshiki Otsutsuki",10],
-      ["Kinshiki Otsutsuki",8],
-      ["Toneri Otsutsuki",8],
-      ["Urashiki Otsutsuki",8],
-      ["Koji Kashin",8],
-      ["Code",8],
-      ["Delta",8],
-      ["Jigen",9],
-      ["Isshiki Otsutsuki",10],
-      ["Kawaki",8],
-      ["Boruto Uzumaki",8],
-      ["Sarada Uchiha",8],
-      ["Mitsuki",8],
-      ["Shinki",7],
       ["Temari",7],
       ["Kankuro",6],
       ["Chiyo",7],
@@ -117,25 +112,47 @@ const ANIME = {
       ["Jugo",6],
       ["Suigetsu Hozuki",6],
       ["Karin Uzumaki",6],
-      ["Shikaku Nara",7],
-      ["Shikamaru Nara (Shippuden)",8],
-      ["Naruto Uzumaki (Sage Mode)",10],
-      ["Naruto Uzumaki (KCM)",10],
-      ["Naruto Uzumaki (Six Paths)",10],
-      ["Sasuke Uchiha (EMS)",10],
-      ["Sasuke Uchiha (Rinnegan)",10],
-      ["Madara Uchiha (Ten-Tails)",10],
-      ["Obito Uchiha (Ten-Tails)",10],
-      ["Might Guy (Eight Gates)",10],
-      ["Kakashi Hatake (Double Mangekyo)",10],
-      ["Hashirama Senju (Sage Mode)",10],
-      ["Minato Namikaze (KCM)",10],
-      ["Itachi Uchiha (Reanimated)",9],
-      ["Nagato (Six Paths)",9],
-      ["Orochimaru (War Arc)",8],
-      ["Kabuto (Sage Mode)",8]
+      ["Yugito Nii",7],
+      ["Yagura",7],
+      ["Roshi",7],
+      ["Han",7],
+      ["Utakata",7],
+      ["Fu",6],
+      ["Darui",7],
+      ["Omoi",6],
+      ["Karui",6],
+      ["Kitsuchi",7],
+      ["Akatsuchi",6],
+      ["Onoki",8],
+      ["Mu",8],
+      ["Gengetsu Hozuki",8],
+      ["Mei Terumi",7],
+      ["Chojuro",6],
+      ["Third Raikage",9],
+      ["Fourth Raikage",9],
+      ["Mifune",7],
+      ["Hanzo",8],
+      ["Guren",7],
+      ["Dosu Kinuta",5],
+      ["Jirobo",6],
+      ["Kidomaru",6],
+      ["Sakon",6],
+      ["Tayuya",6],
+      ["Ukon",6],
+      ["Hayate Gekko",5],
+      ["Genma Shiranui",6],
+      ["Ibiki Morino",6],
+      ["Yahiko",7],
+      ["DMS Kakashi Hatake",10]
     ]
   },
+
+  /*
+  =======================================================
+  JUJUTSU KAISEN
+  EXACTLY 100
+  =======================================================
+  */
 
   jjk: {
     name: "Jujutsu Kaisen",
@@ -246,6 +263,13 @@ const ANIME = {
     ]
   },
 
+  /*
+  =======================================================
+  ATTACK ON TITAN
+  EXACTLY 100
+  =======================================================
+  */
+
   aot: {
     name: "Attack on Titan",
     icon: "🧱",
@@ -349,6 +373,13 @@ const ANIME = {
       ["Levi (Beast Titan Battle)",10]
     ]
   },
+
+  /*
+  =======================================================
+  DEMON SLAYER
+  EXACTLY 100
+  =======================================================
+  */
 
   demon_slayer: {
     name: "Demon Slayer",
@@ -461,6 +492,13 @@ const ANIME = {
     ]
   },
 
+  /*
+  =======================================================
+  DEATH NOTE
+  EXACTLY 30
+  =======================================================
+  */
+
   death_note: {
     name: "Death Note",
     icon: "📓",
@@ -527,6 +565,17 @@ for (const key of Object.keys(TARGETS)) {
   }
 }
 
+const totalRoster = Object.values(ANIME).reduce(
+  (sum, anime) => sum + anime.characters.length,
+  0
+);
+
+if (totalRoster !== 430) {
+  throw new Error(
+    `TOTAL roster has ${totalRoster} entries, expected 430`
+  );
+}
+
 console.log(
   "ROSTER CHECK:",
   Object.entries(TARGETS)
@@ -557,7 +606,9 @@ function cleanName(name) {
 
 function getRoom(code) {
   return rooms.get(
-    String(code || "").trim().toUpperCase()
+    String(code || "")
+      .trim()
+      .toUpperCase()
   );
 }
 
@@ -671,6 +722,7 @@ function startNextCharacter(room) {
     room.started = false;
     room.paused = false;
     room.finished = true;
+    room.locked = true;
 
     emitRoom(room);
     return;
@@ -733,18 +785,36 @@ function finishCurrentCharacter(room) {
     );
 
     if (player) {
-      player.budget -= current.bid;
+      /*
+      Prevent negative budget in case of any
+      unexpected state.
+      */
+      if (current.bid <= player.budget) {
+        player.budget -= current.bid;
 
-      player.roster.push({
-        name: current.name,
-        rating: current.rating,
-        price: current.bid
-      });
+        player.roster.push({
+          name: current.name,
+          rating: current.rating,
+          price: current.bid
+        });
 
+        room.history.push({
+          name: current.name,
+          bid: current.bid,
+          bidderName: player.name
+        });
+      } else {
+        room.history.push({
+          name: current.name,
+          bid: 0,
+          bidderName: "Unsold"
+        });
+      }
+    } else {
       room.history.push({
         name: current.name,
-        bid: current.bid,
-        bidderName: player.name
+        bid: 0,
+        bidderName: "Unsold"
       });
     }
   } else {
@@ -938,6 +1008,25 @@ io.on("connection", socket => {
       );
     }
 
+    /*
+    Prevent duplicate names in the same room.
+    */
+
+    const duplicateName = [
+      ...room.players.values()
+    ].some(
+      p =>
+        p.name.toLowerCase() ===
+        playerName.toLowerCase()
+    );
+
+    if (duplicateName) {
+      return sendError(
+        socket,
+        "That player name is already taken."
+      );
+    }
+
     const player = {
       id: socket.id,
       token: makeToken(),
@@ -1079,6 +1168,8 @@ io.on("connection", socket => {
         );
       }
 
+      clearRoomTimer(room);
+
       room.started = true;
       room.finished = false;
       room.paused = false;
@@ -1100,7 +1191,10 @@ io.on("connection", socket => {
       emitRoom(room);
 
       setTimeout(() => {
-        if (room.started) {
+        if (
+          room.started &&
+          !room.finished
+        ) {
           startNextCharacter(room);
         }
       }, 500);
@@ -1148,7 +1242,10 @@ io.on("connection", socket => {
 
     if (action === "pause") {
       if (!room.started) {
-        return;
+        return sendError(
+          socket,
+          "Auction is not running."
+        );
       }
 
       room.paused = Boolean(
@@ -1166,6 +1263,13 @@ io.on("connection", socket => {
     */
 
     if (action === "lock") {
+      if (room.started) {
+        /*
+        During auction this only controls
+        room joining. Bidding remains possible.
+        */
+      }
+
       room.locked = Boolean(
         payload.value
       );
@@ -1182,7 +1286,10 @@ io.on("connection", socket => {
 
     if (action === "skip") {
       if (!room.started) {
-        return;
+        return sendError(
+          socket,
+          "Auction is not running."
+        );
       }
 
       clearRoomTimer(room);
@@ -1334,6 +1441,11 @@ io.on("connection", socket => {
       emitRoom(room);
       return;
     }
+
+    sendError(
+      socket,
+      "Unknown host action."
+    );
   });
 
   /*
@@ -1391,6 +1503,13 @@ io.on("connection", socket => {
       );
     }
 
+    if (!player.online) {
+      return sendError(
+        socket,
+        "You are offline."
+      );
+    }
+
     if (!room.current) {
       return;
     }
@@ -1411,6 +1530,10 @@ io.on("connection", socket => {
       player.id;
     room.current.bidderName =
       player.name;
+
+    /*
+    Reset countdown after every successful bid.
+    */
 
     room.current.timeLeft =
       room.timerSeconds;
@@ -1441,6 +1564,25 @@ io.on("connection", socket => {
 
 /*
 =========================================================
+EMPTY ROOM CLEANUP
+=========================================================
+*/
+
+setInterval(() => {
+  for (const [code, room] of rooms.entries()) {
+    const hasOnlinePlayer =
+      [...room.players.values()]
+        .some(player => player.online);
+
+    if (!hasOnlinePlayer) {
+      clearRoomTimer(room);
+      rooms.delete(code);
+    }
+  }
+}, 10 * 60 * 1000);
+
+/*
+=========================================================
 SERVER
 =========================================================
 */
@@ -1454,10 +1596,6 @@ server.listen(PORT, () => {
   );
 
   console.log(
-    `Loaded ${Object.values(ANIME).reduce(
-      (sum, anime) =>
-        sum + anime.characters.length,
-      0
-    )} auction entries`
+    `Loaded ${totalRoster} auction entries`
   );
 });
