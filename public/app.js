@@ -5,6 +5,9 @@ let myId = null;
 let creds = null;
 let anime = null;
 
+const portraitCache = new Map();
+let portraitRequest = 0;
+
 const A = {
   naruto: [
     "🍥",
@@ -37,8 +40,8 @@ const A = {
   ]
 };
 
-
-const $ = x => document.getElementById(x);
+const $ = x =>
+  document.getElementById(x);
 
 const esc = s =>
   String(s).replace(
@@ -52,14 +55,7 @@ const esc = s =>
     }[c])
   );
 
-
-/* =========================
-   TOAST
-========================= */
-
 function toast(x) {
-  if (!$("toast")) return;
-
   $("toast").textContent = x;
   $("toast").style.display = "block";
 
@@ -70,346 +66,407 @@ function toast(x) {
   }, 2500);
 }
 
-
-/* =========================
-   VIEW SWITCHING
-========================= */
-
 function show(x) {
-  document.querySelectorAll(".view").forEach(v =>
-    v.classList.add("hidden")
-  );
+  document
+    .querySelectorAll(".view")
+    .forEach(v =>
+      v.classList.add("hidden")
+    );
 
-  if ($(x)) {
-    $(x).classList.remove("hidden");
-  }
+  $(x).classList.remove("hidden");
 }
 
-
-/* =========================
-   ANIME CARDS
-========================= */
+// ======================================================
+// ANIME CARDS
+// ======================================================
 
 function cards() {
-  if (!$("animeGrid")) return;
 
-  $("animeGrid").innerHTML = Object.entries(A)
-    .map(
-      ([k, v]) => `
+  $("animeGrid").innerHTML =
+    Object.entries(A)
+      .map(([k, v]) => `
         <div class="animeCard">
+
           <div>
+
             <div
               class="animeArt"
               style="background-image:url('${v[2]}')"
             >
-              <div class="animeIcon">${v[0]}</div>
+              <div class="animeIcon">
+                ${v[0]}
+              </div>
             </div>
 
-            <h3>${v[1]}</h3>
+            <h3>
+              ${v[1]}
+            </h3>
 
-            <p>PRIVATE MULTIPLAYER ROOM</p>
+            <p>
+              PRIVATE MULTIPLAYER ROOM
+            </p>
+
           </div>
 
-          <button onclick="create('${k}')">
+          <button
+            onclick="create('${k}')"
+          >
             CREATE ROOM →
           </button>
+
         </div>
-      `
-    )
-    .join("");
+      `)
+      .join("");
 }
 
 cards();
 
-
-/* =========================
-   CREATE ROOM
-========================= */
+// ======================================================
+// CREATE
+// ======================================================
 
 function create(k) {
+
   anime = k;
 
-  const name = prompt("Your name");
+  const name =
+    prompt("Your name");
 
   if (!name) return;
 
-  const password = prompt(
-    "Room password (optional)",
-    ""
-  );
+  const password =
+    prompt(
+      "Room password (optional)",
+      ""
+    );
 
   const budget =
-    prompt("Starting budget", "100") || 100;
+    prompt(
+      "Starting budget",
+      "100"
+    ) || 100;
 
-  socket.emit("createRoom", {
-    anime: k,
-    name,
-    budget,
-    password
-  });
+  socket.emit(
+    "createRoom",
+    {
+      anime: k,
+      name,
+      budget,
+      password
+    }
+  );
 }
 
-
-/* =========================
-   JOIN ROOM
-========================= */
+// ======================================================
+// JOIN
+// ======================================================
 
 function join() {
-  const code = $("joinCode").value.trim();
-  const name = $("joinName").value.trim();
-  const password = $("joinPass").value;
+
+  const code =
+    $("joinCode")
+      .value
+      .trim();
+
+  const name =
+    $("joinName")
+      .value
+      .trim();
+
+  const password =
+    $("joinPass").value;
 
   if (!code || !name) {
-    return toast("Enter room code and your name.");
+    return toast(
+      "Enter room code and your name."
+    );
   }
 
-  socket.emit("joinRoom", {
-    code,
-    name,
-    password
-  });
+  socket.emit(
+    "joinRoom",
+    {
+      code,
+      name,
+      password
+    }
+  );
 }
 
+// ======================================================
+// HOST
+// ======================================================
 
-/* =========================
-   HOST ACTION
-========================= */
+function host(
+  action,
+  payload = {}
+) {
 
-function host(action, payload = {}) {
-  if (!creds?.hostToken) {
-    return toast("Host permission required.");
+  if (
+    !creds?.hostToken
+  ) {
+    return;
   }
 
-  if (!state?.code) {
-    return toast("Room not ready.");
-  }
-
-  socket.emit("hostAction", {
-    code: state.code,
-    hostToken: creds.hostToken,
-    action,
-    payload
-  });
+  socket.emit(
+    "hostAction",
+    {
+      code: state.code,
+      hostToken:
+        creds.hostToken,
+      action,
+      payload
+    }
+  );
 }
 
-
-/* =========================
-   BID
-========================= */
+// ======================================================
+// BID
+// ======================================================
 
 function bid() {
-  if (!state?.code || !creds?.token) return;
 
-  socket.emit("bid", {
-    code: state.code,
-    token: creds.token
-  });
-}
-
-
-/* =========================
-   COPY INVITE
-========================= */
-
-function copyInvite() {
-  if (!$("invite")) return;
-
-  navigator.clipboard
-    .writeText($("invite").value)
-    .then(() => {
-      toast("Invite link copied");
-    })
-    .catch(() => {
-      toast("Could not copy invite link");
-    });
-}
-
-
-/* =========================
-   NEW AUCTION
-========================= */
-
-function newAuction() {
-  if (!creds?.hostToken) {
-    return toast("Only the host can start a new auction.");
+  if (
+    !state ||
+    state.finished ||
+    !creds?.token
+  ) {
+    return;
   }
 
-  const ok = confirm(
-    "Start a new auction?\n\n" +
-    "Budgets will reset and all previous rosters/results will be cleared."
+  socket.emit(
+    "bid",
+    {
+      code: state.code,
+      token: creds.token
+    }
   );
+}
+
+// ======================================================
+// NEW AUCTION
+// ======================================================
+
+function newAuction() {
+
+  if (
+    !creds?.hostToken
+  ) {
+    return;
+  }
+
+  const ok =
+    confirm(
+      "Start a completely new auction?\n\nAll budgets and rosters will reset."
+    );
 
   if (!ok) return;
 
   host("new");
 }
 
+// ======================================================
+// COPY INVITE
+// ======================================================
 
-/* =========================
-   SOCKET CONNECT
-========================= */
+function copyInvite() {
 
-socket.on("connect", () => {
-  myId = socket.id;
+  navigator.clipboard
+    .writeText(
+      $("invite").value
+    );
 
-  if ($("topStatus")) {
-    $("topStatus").textContent = "CONNECTED";
-  }
+  toast(
+    "Invite link copied"
+  );
+}
 
-  const c = localStorage.getItem("aa-creds");
+// ======================================================
+// SOCKET CONNECT
+// ======================================================
 
-  if (c) {
-    try {
-      const x = JSON.parse(c);
+socket.on(
+  "connect",
+  () => {
 
-      creds = x;
+    myId =
+      socket.id;
 
-      socket.emit("rejoin", x);
-    } catch {
-      localStorage.removeItem("aa-creds");
+    $("topStatus")
+      .textContent =
+      "CONNECTED";
+
+    const c =
+      localStorage.getItem(
+        "aa-creds"
+      );
+
+    if (c) {
+
+      try {
+
+        const x =
+          JSON.parse(c);
+
+        creds = x;
+
+        socket.emit(
+          "rejoin",
+          x
+        );
+
+      } catch {
+
+        localStorage.removeItem(
+          "aa-creds"
+        );
+      }
     }
   }
-});
+);
 
+// ======================================================
+// CREDENTIALS
+// ======================================================
 
-/* =========================
-   CREDENTIALS
-========================= */
+socket.on(
+  "credentials",
+  c => {
 
-socket.on("credentials", c => {
-  creds = c;
+    creds = c;
 
-  localStorage.setItem(
-    "aa-creds",
-    JSON.stringify(c)
-  );
+    localStorage.setItem(
+      "aa-creds",
+      JSON.stringify(c)
+    );
 
-  history.replaceState(
-    {},
-    "",
-    `?room=${c.code}`
-  );
-});
+    history.replaceState(
+      {},
+      "",
+      `?room=${c.code}`
+    );
+  }
+);
 
+// ======================================================
+// ERRORS
+// ======================================================
 
-/* =========================
-   ERRORS
-========================= */
+socket.on(
+  "errorMsg",
+  toast
+);
 
-socket.on("errorMsg", toast);
+// ======================================================
+// KICKED
+// ======================================================
 
+socket.on(
+  "kicked",
+  () => {
 
-/* =========================
-   KICKED
-========================= */
+    localStorage.removeItem(
+      "aa-creds"
+    );
 
-socket.on("kicked", () => {
-  localStorage.removeItem("aa-creds");
+    toast(
+      "You were removed from the room."
+    );
 
-  toast("You were removed from the room.");
+    setTimeout(
+      () =>
+        location.href =
+          location.pathname,
+      1000
+    );
+  }
+);
 
-  setTimeout(() => {
-    location.href = location.pathname;
-  }, 1000);
-});
+// ======================================================
+// STATE
+// ======================================================
 
+socket.on(
+  "state",
+  s => {
 
-/* =========================
-   STATE UPDATE
-========================= */
+    state = s;
 
-socket.on("state", s => {
-  state = s;
+    render();
+  }
+);
 
-  render();
-});
-
-
-/* =========================
-   MAIN RENDER
-========================= */
+// ======================================================
+// RENDER
+// ======================================================
 
 function render() {
+
   if (!state) return;
 
-  anime = state.anime;
-
-  /*
-    FINISHED AUCTION
-  */
+  anime =
+    state.anime;
 
   if (state.finished) {
+
     show("finish");
+
     finish();
+
     return;
   }
-
-
-  /*
-    LOBBY / NEW AUCTION
-  */
 
   if (!state.started) {
+
     show("lobby");
+
     lobby();
+
     return;
   }
 
-
-  /*
-    ACTIVE AUCTION
-  */
-
   show("auction");
+
   auction();
 }
 
-
-/* =========================
-   LOBBY
-========================= */
+// ======================================================
+// LOBBY
+// ======================================================
 
 function lobby() {
-  if (!$("lobbyAnime")) return;
 
-  $("lobbyAnime").textContent =
-    A[state.anime][1].toUpperCase();
+  $("lobbyAnime")
+    .textContent =
+    A[state.anime][1]
+      .toUpperCase();
 
-  $("roomCode").textContent =
+  $("roomCode")
+    .textContent =
     state.code;
 
-  $("invite").value =
+  $("invite")
+    .value =
     location.origin +
     location.pathname +
     `?room=${state.code}`;
 
-  $("count").textContent =
+  $("count")
+    .textContent =
     `(${state.players.length})`;
 
-
-  /*
-    HOST START BUTTON
-  */
-
   $("start").style.display =
-    creds?.hostToken ? "block" : "none";
+    creds?.hostToken
+      ? "block"
+      : "none";
 
-
-  /*
-    LOBBY STATUS
-  */
-
-  $("lobbySub").textContent =
+  $("lobbySub")
+    .textContent =
     state.locked
       ? "Room locked"
       : "Waiting for players…";
 
-
-  /*
-    PLAYERS
-  */
-
-  $("lobbyPlayers").innerHTML =
+  $("lobbyPlayers")
+    .innerHTML =
     state.players
       .map(
         p => `
@@ -417,11 +474,24 @@ function lobby() {
 
             <b>
               ${esc(p.name)}
-              ${p.id === state.hostId ? "👑" : ""}
+              ${p.id === state.hostId
+                ? "👑"
+                : ""}
             </b>
 
-            <span class="${p.online ? "online" : ""}">
-              ${p.online ? "● ONLINE" : "○ OFFLINE"}
+            <span
+              class="${
+                p.online
+                  ? "online"
+                  : ""
+              }"
+            >
+              ${
+                p.online
+                  ? "● ONLINE"
+                  : "○ OFFLINE"
+              }
+
               · 💰 ${p.budget}
             </span>
 
@@ -444,40 +514,56 @@ function lobby() {
       )
       .join("");
 
-
-  /*
-    HOST SETTINGS
-  */
-
   if (creds?.hostToken) {
-    $("settings").innerHTML = `
-      <h3>HOST SETTINGS</h3>
 
-      <label>STARTING BUDGET</label>
+    $("settings").innerHTML = `
+
+      <h3>
+        HOST SETTINGS
+      </h3>
+
+      <label>
+        STARTING BUDGET
+      </label>
+
       <input
         id="sb"
         value="${state.budget}"
+        type="number"
       >
 
-      <label>BID INCREMENT</label>
+      <label>
+        BID INCREMENT
+      </label>
+
       <input
         id="si"
         value="${state.increment}"
+        type="number"
       >
 
-      <label>TIMER (SECONDS)</label>
+      <label>
+        TIMER (SECONDS)
+      </label>
+
       <input
         id="st"
         value="${state.timerSeconds}"
+        type="number"
       >
 
-      <label>ROOM PASSWORD</label>
+      <label>
+        ROOM PASSWORD
+      </label>
+
       <input
         id="sp"
         type="password"
       >
 
-      <button onclick="saveSettings()">
+      <button
+        onclick="saveSettings()"
+      >
         SAVE SETTINGS
       </button>
 
@@ -490,9 +576,13 @@ function lobby() {
         Host controls unlock automatically once the auction starts.
       </p>
     `;
+
   } else {
+
     $("settings").innerHTML = `
-      <h3>WAITING FOR HOST</h3>
+      <h3>
+        WAITING FOR HOST
+      </h3>
 
       <p
         style="
@@ -508,87 +598,95 @@ function lobby() {
   }
 }
 
-
-/* =========================
-   SAVE SETTINGS
-========================= */
+// ======================================================
+// SETTINGS
+// ======================================================
 
 function saveSettings() {
-  if (!$("sb") || !$("si") || !$("st")) return;
 
-  host("settings", {
-    budget: $("sb").value,
-    increment: $("si").value,
-    timer: $("st").value,
-    password: $("sp")?.value || ""
-  });
+  host(
+    "settings",
+    {
+      budget:
+        $("sb").value,
+
+      increment:
+        $("si").value,
+
+      timer:
+        $("st").value,
+
+      password:
+        $("sp").value
+    }
+  );
 }
 
-
-/* =========================
-   KICK PLAYER
-========================= */
+// ======================================================
+// KICK
+// ======================================================
 
 function kick(id) {
-  host("kick", {
-    id
-  });
+
+  host(
+    "kick",
+    {
+      id
+    }
+  );
 }
 
-
-/* =========================
-   AUCTION SCREEN
-========================= */
+// ======================================================
+// AUCTION
+// ======================================================
 
 function auction() {
-  if (!state) return;
 
   const me =
     state.players.find(
-      p => p.id === myId
+      p =>
+        p.id === myId
     );
 
-
-  /*
-    HEADER
-  */
-
-  $("auctionAnime").textContent =
+  $("auctionAnime")
+    .textContent =
     A[state.anime][1];
 
-  $("progress").textContent =
+  $("progress")
+    .textContent =
     `${Math.min(
       state.index + 1,
       state.total
     )} / ${state.total}`;
 
-  $("roomSmall").textContent =
+  $("roomSmall")
+    .textContent =
     state.code;
 
-
-  /*
-    WALLET
-  */
-
-  $("wallet").textContent =
+  $("wallet")
+    .textContent =
     me
       ? `💰 ${me.budget}`
       : "—";
 
+  // PLAYERS
 
-  /*
-    PLAYERS
-  */
-
-  $("sidePlayers").innerHTML =
+  $("sidePlayers")
+    .innerHTML =
     state.players
       .map(
         p => `
-          <div class="playerMini">
+          <div
+            class="playerMini"
+          >
 
             <b>
               ${esc(p.name)}
-              ${p.id === state.hostId ? " 👑" : ""}
+              ${
+                p.id === state.hostId
+                  ? " 👑"
+                  : ""
+              }
             </b>
 
             <span>
@@ -600,18 +698,18 @@ function auction() {
       )
       .join("");
 
+  // HISTORY
 
-  /*
-    HISTORY
-  */
-
-  $("history").innerHTML =
+  $("history")
+    .innerHTML =
     state.history
       .slice()
       .reverse()
       .map(
         x => `
-          <div class="sale">
+          <div
+            class="sale"
+          >
 
             <b>
               ${esc(x.name)}
@@ -619,9 +717,15 @@ function auction() {
 
             <span>
               ${
-                x.bidderName === "Unsold"
+                x.bidderName ===
+                "Unsold"
+
                   ? "UNSOLD"
-                  : `💰 ${x.bid} · ${esc(x.bidderName)}`
+
+                  : `💰 ${x.bid}
+                     · ${esc(
+                       x.bidderName
+                     )}`
               }
             </span>
 
@@ -630,17 +734,18 @@ function auction() {
       )
       .join("");
 
+  // MY ROSTER
 
-  /*
-    MY ROSTER
-  */
-
-  $("myRoster").innerHTML =
+  $("myRoster")
+    .innerHTML =
     me?.roster?.length
+
       ? me.roster
           .map(
             x => `
-              <div class="rosterItem">
+              <div
+                class="rosterItem"
+              >
 
                 <b>
                   ${esc(x.name)}
@@ -655,6 +760,7 @@ function auction() {
             `
           )
           .join("")
+
       : `
         <p
           style="
@@ -666,73 +772,57 @@ function auction() {
         </p>
       `;
 
-
-  /*
-    NO CURRENT CHARACTER
-  */
-
   if (!state.current) {
-    $("bidBtn").disabled = true;
 
-    if ($("hostBar")) {
-      $("hostBar").innerHTML =
-        creds?.hostToken
-          ? `
-            <button
-              class="adminBtn"
-              onclick="host('end')"
-            >
-              END AUCTION
-            </button>
-          `
-          : "";
-    }
+    $("bidBtn").disabled = true;
 
     return;
   }
 
+  // CHARACTER
 
-  /*
-    CURRENT CHARACTER
-  */
-
-  $("charName").textContent =
+  $("charName")
+    .textContent =
     state.current.name;
 
-  $("rating").textContent =
+  $("rating")
+    .textContent =
     `POWER ${state.current.rating}/10`;
 
-  $("rarity").textContent =
+  $("rarity")
+    .textContent =
     state.current.rating >= 9
       ? "LEGENDARY"
       : state.current.rating >= 8
-      ? "ELITE"
-      : "RARE";
+        ? "ELITE"
+        : "RARE";
 
-  $("base").textContent =
+  $("base")
+    .textContent =
     state.current.base;
 
-  $("timer").textContent =
+  $("timer")
+    .textContent =
     state.current.timeLeft;
 
-  $("bid").textContent =
+  $("bid")
+    .textContent =
     state.current.bid;
 
-  $("bidder").textContent =
+  $("bidder")
+    .textContent =
     state.current.bidderName
-      ? `Leading: ${esc(state.current.bidderName)}`
+      ? `Leading: ${esc(
+          state.current.bidderName
+        )}`
       : "No bids yet";
 
-  $("nextBid").textContent =
+  $("nextBid")
+    .textContent =
     state.current.bid +
     state.increment;
 
-
-  /*
-    BID BUTTON
-  */
-
-  const can =
+  const canBid =
     me &&
     state.current.bid +
       state.increment <=
@@ -741,226 +831,427 @@ function auction() {
     !state.finished;
 
   $("bidBtn").disabled =
-    !can;
+    !canBid;
 
-
-  /*
-    PORTRAIT
-  */
+  // PORTRAIT
 
   loadPortrait(
     state.current.name
   );
 
-
-  /*
-    HOST CONTROLS
-  */
+  // HOST BAR
 
   if (creds?.hostToken) {
+
     $("hostBar").innerHTML = `
 
       <button
         class="adminBtn"
-        onclick="host('pause',{value:${!state.paused}})"
+        onclick="
+          host(
+            'pause',
+            {
+              value:${!state.paused}
+            }
+          )
+        "
       >
-        ${state.paused ? "RESUME" : "PAUSE"}
+        ${
+          state.paused
+            ? "RESUME"
+            : "PAUSE"
+        }
       </button>
 
       <button
         class="adminBtn"
-        onclick="host('skip')"
+        onclick="
+          host('skip')
+        "
       >
         SKIP / NEXT
       </button>
 
       <button
         class="adminBtn"
-        onclick="host('lock',{value:${!state.locked}})"
+        onclick="
+          host(
+            'lock',
+            {
+              value:${!state.locked}
+            }
+          )
+        "
       >
-        ${state.locked ? "UNLOCK" : "LOCK ROOM"}
+        ${
+          state.locked
+            ? "UNLOCK"
+            : "LOCK ROOM"
+        }
       </button>
 
       <button
         class="adminBtn"
-        onclick="host('end')"
+        onclick="
+          host('end')
+        "
       >
         END AUCTION
       </button>
 
     `;
+
   } else {
+
     $("hostBar").innerHTML =
       state.paused
-        ? "<small>AUCTION PAUSED BY HOST</small>"
+        ? `
+          <small>
+            AUCTION PAUSED BY HOST
+          </small>
+        `
         : "";
   }
 }
 
+// ======================================================
+// PORTRAIT SYSTEM
+// ======================================================
 
-/* =========================
-   CHARACTER PORTRAIT
-========================= */
+function portraitName(name) {
 
-function loadPortrait(name) {
-  const img = $("portrait");
-  const fallback = $("portraitFallback");
+  return String(name || "")
+    .replace(
+      /\s*\([^)]*\)\s*$/g,
+      ""
+    )
+    .trim();
+}
 
-  if (!img || !fallback) return;
+function normalizePortraitName(name) {
+
+  return String(name || "")
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9]/g,
+      ""
+    );
+}
+
+async function loadPortrait(name) {
+
+  const img =
+    $("portrait");
+
+  const fallback =
+    $("portraitFallback");
+
+  if (!img || !fallback) {
+    return;
+  }
 
   fallback.textContent =
     A[state.anime][0];
 
-  img.classList.remove("loaded");
-
-  const q =
-    encodeURIComponent(name);
-
-
-  img.onload = () => {
-    $("portraitWrap")
-      ?.classList
-      ?.add("loaded");
-
-    img.parentElement
-      ?.classList
-      ?.add("loaded");
-  };
-
-
-  img.onerror = () => {
-    img.parentElement
-      ?.classList
-      ?.remove("loaded");
-  };
-
+  const request =
+    ++portraitRequest;
 
   /*
-    Jikan API
-  */
+   * For entries such as:
+   *
+   * Naruto Uzumaki (Sage Mode)
+   *
+   * search for:
+   *
+   * Naruto Uzumaki
+   */
 
-  img.src =
-    `https://api.jikan.moe/v4/characters?q=${q}&limit=1`;
+  const baseName =
+    portraitName(name);
 
+  const key =
+    `${state.anime}:${baseName}`;
 
-  fetch(
-    `https://api.jikan.moe/v4/characters?q=${q}&limit=1`
-  )
-    .then(r => r.json())
-    .then(d => {
+  // CACHE
 
-      const u =
-        d?.data?.[0]
-          ?.images
-          ?.jpg
-          ?.large_image_url ||
-        d?.data?.[0]
-          ?.images
-          ?.jpg
-          ?.image_url;
+  if (
+    portraitCache.has(key)
+  ) {
 
-      if (u) {
-        img.src = u;
+    const cached =
+      portraitCache.get(key);
+
+    if (
+      request !==
+      portraitRequest
+    ) {
+      return;
+    }
+
+    img.onload = () => {
+      if (
+        request ===
+        portraitRequest
+      ) {
+        img.parentElement
+          ?.classList
+          .add("loaded");
+      }
+    };
+
+    img.src =
+      cached;
+
+    return;
+  }
+
+  img.parentElement
+    ?.classList
+    .remove("loaded");
+
+  try {
+
+    const q =
+      encodeURIComponent(
+        baseName
+      );
+
+    /*
+     * IMPORTANT:
+     *
+     * limit=10 instead of limit=1.
+     *
+     * We then select the EXACT
+     * character name.
+     */
+
+    const response =
+      await fetch(
+        `https://api.jikan.moe/v4/characters?q=${q}&limit=10`
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Jikan request failed"
+      );
+    }
+
+    const data =
+      await response.json();
+
+    if (
+      request !==
+      portraitRequest
+    ) {
+      return;
+    }
+
+    const results =
+      data?.data || [];
+
+    const wanted =
+      normalizePortraitName(
+        baseName
+      );
+
+    // =================================================
+    // EXACT MATCH FIRST
+    // =================================================
+
+    let character =
+      results.find(
+        x =>
+          normalizePortraitName(
+            x?.name
+          ) === wanted
+      );
+
+    // =================================================
+    // PARTIAL MATCH SECOND
+    // =================================================
+
+    if (!character) {
+
+      character =
+        results.find(x => {
+
+          const n =
+            normalizePortraitName(
+              x?.name
+            );
+
+          return (
+            n.includes(wanted) ||
+            wanted.includes(n)
+          );
+        });
+    }
+
+    // No correct character found
+
+    if (!character) {
+
+      img.parentElement
+        ?.classList
+        .remove("loaded");
+
+      return;
+    }
+
+    const url =
+      character
+        ?.images
+        ?.jpg
+        ?.large_image_url ||
+      character
+        ?.images
+        ?.jpg
+        ?.image_url;
+
+    if (!url) {
+      return;
+    }
+
+    portraitCache.set(
+      key,
+      url
+    );
+
+    if (
+      request !==
+      portraitRequest
+    ) {
+      return;
+    }
+
+    img.onload = () => {
+
+      if (
+        request ===
+        portraitRequest
+      ) {
 
         img.parentElement
           ?.classList
-          ?.add("loaded");
+          .add("loaded");
       }
-    })
-    .catch(() => {});
+    };
+
+    img.onerror = () => {
+
+      img.parentElement
+        ?.classList
+        .remove("loaded");
+    };
+
+    img.src = url;
+
+  } catch (e) {
+
+    if (
+      request !==
+      portraitRequest
+    ) {
+      return;
+    }
+
+    img.parentElement
+      ?.classList
+      .remove("loaded");
+  }
 }
 
-
-/* =========================
-   FINISH SCREEN
-========================= */
+// ======================================================
+// FINISH SCREEN
+// ======================================================
 
 function finish() {
 
-  $("final").innerHTML = `
+  $("final")
+    .innerHTML = `
 
-    <div class="finalGrid">
+      <div
+        class="finalGrid"
+      >
 
-      ${state.players
-        .map(
-          p => `
+        ${state.players
+          .map(
+            p => `
 
-            <div class="finalCard">
+              <div
+                class="finalCard"
+              >
 
-              <h3>
-                ${esc(p.name)}
-                ${p.id === state.hostId ? "👑" : ""}
-              </h3>
+                <h3>
+                  ${esc(p.name)}
+                  ${
+                    p.id ===
+                    state.hostId
+                      ? " 👑"
+                      : ""
+                  }
+                </h3>
 
-              <p>
-                💰 ${p.budget} remaining
-                <br>
+                <p>
+                  💰 ${p.budget}
+                  remaining
+                  <br>
 
-                ${
-                  p.roster?.length
-                    ? p.roster
-                        .map(
-                          x =>
-                            `${esc(x.name)} — ${x.price}`
-                        )
-                        .join("<br>")
-                    : "No characters won"
-                }
+                  ${
+                    p.roster.length
 
-              </p>
+                      ? p.roster
+                          .map(
+                            x =>
+                              `${esc(
+                                x.name
+                              )}
+                              — ${x.price}`
+                          )
+                          .join(
+                            "<br>"
+                          )
+
+                      : "No characters won"
+                  }
+                </p>
+
+              </div>
+
+            `
+          )
+          .join("")}
+
+      </div>
+
+      ${
+        creds?.hostToken
+          ? `
+            <div
+              style="
+                margin-top:24px;
+                text-align:center;
+              "
+            >
+
+              <button
+                class="adminBtn"
+                onclick="newAuction()"
+              >
+                🔄 NEW AUCTION
+              </button>
 
             </div>
-
           `
-        )
-        .join("")}
+          : ""
+      }
 
-    </div>
-
-
-    ${
-      creds?.hostToken
-        ? `
-
-          <div
-            style="
-              text-align:center;
-              margin-top:25px
-            "
-          >
-
-            <button
-              class="adminBtn"
-              onclick="newAuction()"
-            >
-              🔄 NEW AUCTION
-            </button>
-
-          </div>
-
-        `
-        : `
-
-          <p
-            style="
-              text-align:center;
-              color:#8e96a9;
-              margin-top:25px
-            "
-          >
-            Waiting for the host to start a new auction…
-          </p>
-
-        `
-    }
-
-  `;
+    `;
 }
 
-
-/* =========================
-   ROOM FROM URL
-========================= */
+// ======================================================
+// ROOM URL
+// ======================================================
 
 const q =
   new URLSearchParams(
@@ -968,8 +1259,9 @@ const q =
   ).get("room");
 
 if (q) {
+
   $("joinCode").value =
     q.toUpperCase();
 
   $("joinName").focus();
-  }
+                }
