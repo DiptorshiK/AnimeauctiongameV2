@@ -547,7 +547,7 @@ SAFETY CHECK
 const TARGETS = {
   naruto: 100,
   jjk: 100,
-  aot: 100,
+  aot: 95,
   demon_slayer: 100,
   death_note: 30
 };
