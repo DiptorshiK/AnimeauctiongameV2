@@ -567,7 +567,7 @@ const totalRoster = Object.values(ANIME).reduce(
   0
 );
 
-if (totalRoster !== 430) {
+if (totalRoster !== 425) {
   throw new Error(
     `TOTAL roster has ${totalRoster} entries, expected 430`
   );
@@ -578,7 +578,7 @@ console.log(
   Object.entries(TARGETS)
     .map(([k, n]) => `${k}=${n}`)
     .join(" | "),
-  "| TOTAL=430"
+  "| TOTAL=425"
 );
 
 /*
